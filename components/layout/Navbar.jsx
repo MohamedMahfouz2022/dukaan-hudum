@@ -47,7 +47,7 @@ export function Navbar() {
         </div>
 
         {/* Icons & Mobile Toggle - Grouped at end (Left in RTL) */}
-        <div className="flex items-center space-x-1 md:space-x-3 space-x-reverse">
+        <div className="flex items-center space-x-1 md:space-x-3 ">
           <button onClick={openSearch} className="p-2 hover:bg-accent transition-colors hidden md:block">
             <Search className="w-5 h-5" />
           </button>

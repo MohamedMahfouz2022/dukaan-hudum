@@ -26,7 +26,7 @@ export function CartDrawer() {
           ) : (
             <div className="space-y-8">
               {items.map((item) => (
-                <div key={`${item.id}-${item.selectedSize}-${item.selectedColor?.name}`} className="flex space-x-4 space-x-reverse">
+                <div key={`${item.id}-${item.selectedSize}-${item.selectedColor?.name}`} className="flex space-x-4 ">
                   <div className="relative aspect-3/4 w-24 bg-secondary shrink-0 overflow-hidden">
                     <Image
                       src={item.images[0]}
@@ -52,7 +52,7 @@ export function CartDrawer() {
                       </p>
                       <p className="text-sm font-medium mt-1">{item.price.toFixed(2)}  ج م</p>
                     </div>
-                    <div className="flex items-center space-x-3 space-x-reverse">
+                    <div className="flex items-center space-x-3 ">
                       <button
                         onClick={() => updateQuantity(item.id, item.selectedSize, item.selectedColor?.name, item.quantity - 1)}
                         className="p-1 border border-border hover:bg-accent transition-colors"

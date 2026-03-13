@@ -5,16 +5,17 @@ import { useParams, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { Heart, ShoppingBag, ChevronLeft, ChevronRight, Star, Truck, ShieldCheck, RotateCcw } from "lucide-react"
+import { Heart, ShoppingBag, Star, Truck, ShieldCheck, RotateCcw } from "lucide-react"
 import { products } from "@/data/products"
+import { CATEGORY_NAMES } from "@/data/constants"
 import { Button } from "@/components/ui/Button"
 import { Badge } from "@/components/ui/Badge"
+import { ProductCard } from "@/components/product/ProductCard"
 import { useCartStore } from "@/store/cartStore"
 import { useWishlistStore } from "@/store/wishlistStore"
 import { useUIStore } from "@/store/uiStore"
 import { toast } from "react-hot-toast"
-import { cn } from "@/lib/utils"
-import { ProductCard } from "@/components/product/ProductCard"
+import { cn, formatPrice } from "@/lib/utils"
 
 export default function ProductDetailsPage() {
   const { slug } = useParams()
@@ -33,7 +34,7 @@ export default function ProductDetailsPage() {
     return (
       <div className="luxury-container py-40 text-center">
         <h1 className="text-2xl font-bold uppercase tracking-widest mb-4">المنتج غير موجود</h1>
-        <Button onClick={() => router.push('/shop')}>العودة للمتجر</Button>
+        <Button onClick={() => router.push("/shop")}>العودة للمتجر</Button>
       </div>
     )
   }
@@ -46,13 +47,27 @@ export default function ProductDetailsPage() {
     openCart()
   }
 
+  const handleWishlist = () => {
+    toggleWishlist(product)
+    toast.success(isWishlisted ? "تمت الإزالة من المفضلة" : "تم الإضافة إلى المفضلة")
+  }
+
+  // المنتجات المشابهة: نفس الفئة واستثناء المنتج الحالي
+  const relatedProducts = products
+    .filter(p => p.category === product.category && p.id !== product.id)
+    .slice(0, 4)
+
+  // اسم الفئة بالعربي
+  const categoryName = CATEGORY_NAMES[product.category] || product.category
+  const categoryHref = `/shop?category=${product.category}`
+
   return (
     <div className="luxury-container pt-32 pb-20">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
 
-        {/* Left: Image Gallery */}
+        {/* الصور */}
         <div className="lg:col-span-7 space-y-4">
-          <div className="relative aspect-3/4 bg-neutral-100 overflow-hidden">
+          <div className="relative aspect-[3/4] bg-neutral-100 overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeImage}
@@ -64,7 +79,7 @@ export default function ProductDetailsPage() {
               >
                 <Image
                   src={product.images[activeImage]}
-                  alt={product.name}
+                  alt={`${product.name} - صورة ${activeImage + 1}`}
                   fill
                   priority
                   className="object-cover"
@@ -79,7 +94,8 @@ export default function ProductDetailsPage() {
             )}
 
             <button
-              onClick={() => toggleWishlist(product)}
+              onClick={handleWishlist}
+              aria-label={isWishlisted ? `إزالة ${product.name} من المفضلة` : `إضافة ${product.name} إلى المفضلة`}
               className={cn(
                 "absolute top-6 left-6 z-10 p-3 bg-background/80 backdrop-blur-sm transition-all duration-300",
                 isWishlisted ? "text-red-500" : "hover:text-red-500"
@@ -89,19 +105,21 @@ export default function ProductDetailsPage() {
             </button>
           </div>
 
+          {/* الصور المصغرة */}
           <div className="grid grid-cols-4 gap-4">
             {product.images.map((img, idx) => (
               <button
                 key={idx}
                 onClick={() => setActiveImage(idx)}
+                aria-label={`عرض الصورة ${idx + 1}`}
                 className={cn(
-                  "relative aspect-3/4 bg-neutral-100 border transition-all duration-300 overflow-hidden",
+                  "relative aspect-[3/4] bg-neutral-100 border transition-all duration-300 overflow-hidden",
                   activeImage === idx ? "border-black" : "border-transparent opacity-60 hover:opacity-100"
                 )}
               >
                 <Image
                   src={img}
-                  alt={`${product.name} thumbnail ${idx + 1}`}
+                  alt={`${product.name} - صورة مصغرة ${idx + 1}`}
                   fill
                   className="object-cover"
                 />
@@ -110,30 +128,38 @@ export default function ProductDetailsPage() {
           </div>
         </div>
 
-        {/* Right: Product Info */}
+        {/* تفاصيل المنتج */}
         <div className="lg:col-span-5 flex flex-col text-right">
           <div className="mb-8">
-            <div className="flex items-center space-x-2 space-x-reverse text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-6">
-              <Link href="/shop" className="hover:text-black">ملابس</Link>
+            {/* Breadcrumb - ديناميكي حسب فئة المنتج */}
+            <div className="flex items-center space-x-2  text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-6">
+              <Link href="/shop" className="hover:text-black transition-colors">المتجر</Link>
               <span>/</span>
-              <span>{product.subCategory}</span>
+              <Link href={categoryHref} className="hover:text-black transition-colors">{categoryName}</Link>
+              <span>/</span>
+              <span className="truncate max-w-[120px]">{product.subCategory}</span>
             </div>
 
             <h1 className="text-3xl lg:text-4xl font-bold tracking-widest uppercase mb-4 leading-tight">
               {product.name}
             </h1>
 
-            <div className="flex items-center space-x-4 space-x-reverse mb-6">
-              <span className="text-2xl font-bold">{product.price.toFixed(2)}  ج م</span>
+            <div className="flex items-center space-x-4  mb-6">
+              <span className="text-2xl font-bold">{formatPrice(product.price)}</span>
               {product.oldPrice && (
-                <span className="text-lg text-muted-foreground line-through">{product.oldPrice.toFixed(2)}  ج م</span>
+                <span className="text-lg text-muted-foreground line-through">{formatPrice(product.oldPrice)}</span>
               )}
             </div>
 
-            <div className="flex items-center space-x-2 space-x-reverse mb-8">
-              <div className="flex">
+            {/* التقييم */}
+            <div className="flex items-center space-x-2  mb-8">
+              <div className="flex" aria-label={`التقييم: ${product.rating} من ٥`}>
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className={cn("w-4 h-4", i < Math.floor(product.rating) ? "fill-black" : "text-neutral-300")} />
+                  <Star
+                    key={i}
+                    className={cn("w-4 h-4", i < Math.floor(product.rating) ? "fill-black" : "text-neutral-300")}
+                    aria-hidden="true"
+                  />
                 ))}
               </div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground pt-0.5">
@@ -142,19 +168,24 @@ export default function ProductDetailsPage() {
             </div>
           </div>
 
-          {/* Selections */}
+          {/* الاختيارات */}
           <div className="space-y-8 mb-10">
-            {/* Colors */}
+            {/* الألوان */}
             <div>
-              <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4">اللون: {selectedColor?.name}</h4>
+              <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+                اللون: <span className="text-muted-foreground">{selectedColor?.name}</span>
+              </h4>
               <div className="flex gap-4">
                 {product.colors.map(color => (
                   <button
                     key={color.name}
                     onClick={() => setSelectedColor(color)}
+                    title={color.name}
+                    aria-label={`اختيار اللون ${color.name}`}
+                    aria-pressed={selectedColor?.name === color.name}
                     className={cn(
                       "w-10 h-10 rounded-full border-2 p-1 transition-all duration-300",
-                      selectedColor?.name === color.name ? "border-black" : "border-transparent"
+                      selectedColor?.name === color.name ? "border-black" : "border-transparent hover:border-neutral-300"
                     )}
                   >
                     <div className="w-full h-full rounded-full" style={{ backgroundColor: color.hex }} />
@@ -163,17 +194,21 @@ export default function ProductDetailsPage() {
               </div>
             </div>
 
-            {/* Sizes */}
+            {/* المقاسات */}
             <div>
               <div className="flex justify-between items-center mb-4">
                 <h4 className="text-[10px] font-bold uppercase tracking-[0.2em]">اختر المقاس</h4>
-                <button className="text-[10px] font-bold uppercase tracking-widest underline underline-offset-4 hover:opacity-60">دليل المقاسات</button>
+                <button className="text-[10px] font-bold uppercase tracking-widest underline underline-offset-4 hover:opacity-60">
+                  دليل المقاسات
+                </button>
               </div>
               <div className="grid grid-cols-4 gap-2">
                 {product.sizes.map(size => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
+                    aria-label={`مقاس ${size}`}
+                    aria-pressed={selectedSize === size}
                     className={cn(
                       "h-12 border text-xs font-bold uppercase tracking-widest transition-all duration-300",
                       selectedSize === size ? "bg-black text-white border-black" : "hover:border-black"
@@ -186,18 +221,19 @@ export default function ProductDetailsPage() {
             </div>
           </div>
 
+          {/* أزرار الإجراءات */}
           <div className="flex flex-col space-y-4 mb-12">
             <Button size="lg" className="w-full h-16 text-base" onClick={handleAddToCart}>
-              <ShoppingBag className="w-5 h-5 ms-3" />
+              <ShoppingBag className="w-5 h-5 ms-3" aria-hidden="true" />
               أضف إلى السلة
             </Button>
-            <Button variant="outline" size="lg" className="w-full h-16 text-base" onClick={() => toggleWishlist(product)}>
-              <Heart className={cn("w-5 h-5 ms-3", isWishlisted && "fill-current")} />
+            <Button variant="outline" size="lg" className="w-full h-16 text-base" onClick={handleWishlist}>
+              <Heart className={cn("w-5 h-5 ms-3", isWishlisted && "fill-current")} aria-hidden="true" />
               {isWishlisted ? "في المفضلة" : "أضف للمفضلة"}
             </Button>
           </div>
 
-          {/* Product Details Accordion/List */}
+          {/* تفاصيل إضافية */}
           <div className="border-t pt-8 space-y-6">
             <div className="space-y-4">
               <h4 className="text-xs font-bold uppercase tracking-widest">الوصف</h4>
@@ -207,16 +243,16 @@ export default function ProductDetailsPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
-              <div className="flex items-center space-x-3 space-x-reverse">
-                <Truck className="w-4 h-4" />
+              <div className="flex items-center space-x-3 ">
+                <Truck className="w-4 h-4 shrink-0" aria-hidden="true" />
                 <span className="text-[10px] font-bold uppercase tracking-widest">توصيل في اليوم التالي</span>
               </div>
-              <div className="flex items-center space-x-3 space-x-reverse">
-                <ShieldCheck className="w-4 h-4" />
+              <div className="flex items-center space-x-3 ">
+                <ShieldCheck className="w-4 h-4 shrink-0" aria-hidden="true" />
                 <span className="text-[10px] font-bold uppercase tracking-widest">ضمان مدى الحياة</span>
               </div>
-              <div className="flex items-center space-x-3 space-x-reverse">
-                <RotateCcw className="w-4 h-4" />
+              <div className="flex items-center space-x-3 ">
+                <RotateCcw className="w-4 h-4 shrink-0" aria-hidden="true" />
                 <span className="text-[10px] font-bold uppercase tracking-widest">إرجاع مجاني خلال 30 يوماً</span>
               </div>
             </div>
@@ -224,15 +260,25 @@ export default function ProductDetailsPage() {
         </div>
       </div>
 
-      {/* Related Products */}
-      <section className="mt-40 border-t pt-20">
-        <h2 className="text-2xl font-bold tracking-widest uppercase mb-12">قد يعجبك أيضاً</h2>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-          {products.filter(p => p.id !== product.id).slice(0, 4).map(p => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      </section>
+      {/* منتجات مشابهة — نفس الفئة */}
+      {relatedProducts.length > 0 && (
+        <section className="mt-40 border-t pt-20">
+          <div className="flex justify-between items-end mb-12">
+            <h2 className="text-2xl font-bold tracking-widest uppercase">قد يعجبك أيضاً</h2>
+            <Link
+              href={categoryHref}
+              className="text-xs font-bold tracking-[0.2em] uppercase border-b border-black pb-1 hover:opacity-60 transition-opacity"
+            >
+              تصفح {categoryName} ←
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {relatedProducts.map(p => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   )
 }

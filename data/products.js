@@ -7,7 +7,7 @@ export const products = [
     "subCategory": "shirts",
     "price": 184.99,
     "oldPrice": 232.99,
-    "rating": "4.6",
+    "rating": 4.6,
     "reviews": 145,
     "sizes": [
       "S",
@@ -42,7 +42,7 @@ export const products = [
     "subCategory": "pants",
     "price": 90.99,
     "oldPrice": null,
-    "rating": "4.2",
+    "rating": 4.2,
     "reviews": 147,
     "sizes": [
       "S",
@@ -77,7 +77,7 @@ export const products = [
     "subCategory": "pants",
     "price": 237.99,
     "oldPrice": null,
-    "rating": "4.5",
+    "rating": 4.5,
     "reviews": 12,
     "sizes": [
       "S",
@@ -108,7 +108,7 @@ export const products = [
     "subCategory": "watches",
     "price": 224.99,
     "oldPrice": null,
-    "rating": "4.9",
+    "rating": 4.9,
     "reviews": 96,
     "sizes": [
       "مقاس واحد"
@@ -139,7 +139,7 @@ export const products = [
     "subCategory": "belts",
     "price": 121.99,
     "oldPrice": null,
-    "rating": "4.2",
+    "rating": 4.2,
     "reviews": 62,
     "sizes": [
       "مقاس واحد"
@@ -170,7 +170,7 @@ export const products = [
     "subCategory": "pants",
     "price": 129.99,
     "oldPrice": null,
-    "rating": "4.6",
+    "rating": 4.6,
     "reviews": 31,
     "sizes": [
       "S",
@@ -205,7 +205,7 @@ export const products = [
     "subCategory": "watches",
     "price": 76.99,
     "oldPrice": null,
-    "rating": "4.3",
+    "rating": 4.3,
     "reviews": 139,
     "sizes": [
       "مقاس واحد"
@@ -236,7 +236,7 @@ export const products = [
     "subCategory": "loafers",
     "price": 108.99,
     "oldPrice": 152.99,
-    "rating": "4.0",
+    "rating": 4.0,
     "reviews": 34,
     "sizes": [
       "40",
@@ -272,7 +272,7 @@ export const products = [
     "subCategory": "loafers",
     "price": 159.99,
     "oldPrice": null,
-    "rating": "4.6",
+    "rating": 4.6,
     "reviews": 108,
     "sizes": [
       "40",
@@ -308,7 +308,7 @@ export const products = [
     "subCategory": "watches",
     "price": 160.99,
     "oldPrice": null,
-    "rating": "4.2",
+    "rating": 4.2,
     "reviews": 192,
     "sizes": [
       "مقاس واحد"
@@ -339,7 +339,7 @@ export const products = [
     "subCategory": "belts",
     "price": 172.99,
     "oldPrice": null,
-    "rating": "4.9",
+    "rating": 4.9,
     "reviews": 197,
     "sizes": [
       "مقاس واحد"
@@ -370,7 +370,7 @@ export const products = [
     "subCategory": "belts",
     "price": 170.99,
     "oldPrice": null,
-    "rating": "4.8",
+    "rating": 4.8,
     "reviews": 38,
     "sizes": [
       "مقاس واحد"
@@ -401,7 +401,7 @@ export const products = [
     "subCategory": "t-shirts",
     "price": 113.99,
     "oldPrice": null,
-    "rating": "4.3",
+    "rating": 4.3,
     "reviews": 116,
     "sizes": [
       "S",
@@ -436,7 +436,7 @@ export const products = [
     "subCategory": "boots",
     "price": 79.99,
     "oldPrice": null,
-    "rating": "4.4",
+    "rating": 4.4,
     "reviews": 65,
     "sizes": [
       "40",
@@ -472,7 +472,7 @@ export const products = [
     "subCategory": "sneakers",
     "price": 71.99,
     "oldPrice": null,
-    "rating": "4.4",
+    "rating": 4.4,
     "reviews": 155,
     "sizes": [
       "40",
@@ -508,7 +508,7 @@ export const products = [
     "subCategory": "belts",
     "price": 167.99,
     "oldPrice": null,
-    "rating": "4.9",
+    "rating": 4.9,
     "reviews": 56,
     "sizes": [
       "مقاس واحد"
@@ -539,7 +539,7 @@ export const products = [
     "subCategory": "sunglasses",
     "price": 111.99,
     "oldPrice": null,
-    "rating": "4.6",
+    "rating": 4.6,
     "reviews": 41,
     "sizes": [
       "مقاس واحد"
@@ -570,7 +570,7 @@ export const products = [
     "subCategory": "loafers",
     "price": 101.99,
     "oldPrice": null,
-    "rating": "4.8",
+    "rating": 4.8,
     "reviews": 130,
     "sizes": [
       "40",
@@ -606,7 +606,7 @@ export const products = [
     "subCategory": "loafers",
     "price": 189.99,
     "oldPrice": null,
-    "rating": "4.2",
+    "rating": 4.2,
     "reviews": 187,
     "sizes": [
       "40",
@@ -642,7 +642,7 @@ export const products = [
     "subCategory": "sneakers",
     "price": 230.99,
     "oldPrice": 270.99,
-    "rating": "4.4",
+    "rating": 4.4,
     "reviews": 208,
     "sizes": [
       "40",
@@ -678,7 +678,7 @@ export const products = [
     "subCategory": "sneakers",
     "price": 226.99,
     "oldPrice": null,
-    "rating": "4.0",
+    "rating": 4.0,
     "reviews": 47,
     "sizes": [
       "40",
@@ -714,7 +714,7 @@ export const products = [
     "subCategory": "jackets",
     "price": 223.99,
     "oldPrice": null,
-    "rating": "4.6",
+    "rating": 4.6,
     "reviews": 34,
     "sizes": [
       "S",
@@ -749,7 +749,7 @@ export const products = [
     "subCategory": "sneakers",
     "price": 248.99,
     "oldPrice": null,
-    "rating": "4.8",
+    "rating": 4.8,
     "reviews": 91,
     "sizes": [
       "40",
@@ -785,7 +785,7 @@ export const products = [
     "subCategory": "pants",
     "price": 81.99,
     "oldPrice": null,
-    "rating": "4.8",
+    "rating": 4.8,
     "reviews": 60,
     "sizes": [
       "S",
@@ -820,7 +820,7 @@ export const products = [
     "subCategory": "jackets",
     "price": 179.99,
     "oldPrice": null,
-    "rating": "4.6",
+    "rating": 4.6,
     "reviews": 33,
     "sizes": [
       "S",
@@ -855,7 +855,7 @@ export const products = [
     "subCategory": "t-shirts",
     "price": 159.99,
     "oldPrice": null,
-    "rating": "4.6",
+    "rating": 4.6,
     "reviews": 72,
     "sizes": [
       "S",
@@ -890,7 +890,7 @@ export const products = [
     "subCategory": "sneakers",
     "price": 212.99,
     "oldPrice": null,
-    "rating": "4.1",
+    "rating": 4.1,
     "reviews": 79,
     "sizes": [
       "40",
@@ -926,7 +926,7 @@ export const products = [
     "subCategory": "sneakers",
     "price": 238.99,
     "oldPrice": 290.99,
-    "rating": "4.6",
+    "rating": 4.6,
     "reviews": 85,
     "sizes": [
       "40",
@@ -962,7 +962,7 @@ export const products = [
     "subCategory": "bags",
     "price": 131.99,
     "oldPrice": 196.99,
-    "rating": "4.9",
+    "rating": 4.9,
     "reviews": 202,
     "sizes": [
       "مقاس واحد"
@@ -989,7 +989,7 @@ export const products = [
     "subCategory": "watches",
     "price": 137.99,
     "oldPrice": null,
-    "rating": "4.4",
+    "rating": 4.4,
     "reviews": 196,
     "sizes": [
       "مقاس واحد"

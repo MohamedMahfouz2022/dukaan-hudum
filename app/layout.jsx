@@ -3,6 +3,7 @@ import "./globals.css"
 import { Navbar } from "@/components/layout/Navbar"
 import { Footer } from "@/components/layout/Footer"
 import { CartDrawer } from "@/components/cart/CartDrawer"
+import { SearchModal } from "@/components/ui/SearchModal"
 import { Toaster } from "react-hot-toast"
 
 const cairo = Cairo({
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
         </main>
         <Footer />
         <CartDrawer />
+        <SearchModal />
         <Toaster
           position="bottom-left"
           toastOptions={{
