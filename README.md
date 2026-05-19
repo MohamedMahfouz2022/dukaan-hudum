@@ -112,12 +112,8 @@ npm run dev
 
 ## 🌐 Live Demo
 
-> Add your deployment link here
-
-Example:
-
 ```md
-https://your-live-demo-link.com
+[https://your-live-demo-link.com](https://dukaan-hudum.vercel.app/)
 ```
 
 ---
